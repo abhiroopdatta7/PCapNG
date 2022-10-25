@@ -1,0 +1,9 @@
+project(pcapng-cpp)
+
+file(GLOB_RECURSE CC_SOURCES CONFIGURE_DEPENDS "*.cc")
+
+add_library(${PROJECT_NAME} ${CC_SOURCES})
+add_library(sub::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})
