@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef __PCAPNGBase_H__
-#define __PCAPNGBase_H__
+#ifndef __PCAPNGBLOCK_H__
+#define __PCAPNGBLOCK_H__
 
 #include "PCapNGBuffer.h"
 #include "PCapNGOption.h"
@@ -23,17 +23,6 @@
 
 namespace PCapNG
 {
-
-enum BLOCK_TYPE
-{
-    BLOCK_IDB = 0x00000001, ///< Interface Description Block
-    BLOCK_SPB = 0x00000003, ///< Simple Packet Block
-    BLOCK_NRB = 0x00000004, ///< Name Resolution Block
-    BLOCK_ISB = 0x00000005, ///< Interface Statistics Block
-    BLOCK_EPB = 0x00000006, ///< Enhanced Packet Block
-    BLOCK_DSB = 0x0000000A, ///< Decryption Secrets Block
-    BLOCK_SHB = 0x0A0D0D0A, ///< Section Header Block
-};
 
 class Block
 {
@@ -108,6 +97,17 @@ class Block
     virtual void serialize() = 0;
     Buffer _value;
 
+    enum BLOCK_TYPE
+    {
+        BLOCK_IDB = 0x00000001, ///< Interface Description Block
+        BLOCK_SPB = 0x00000003, ///< Simple Packet Block
+        BLOCK_NRB = 0x00000004, ///< Name Resolution Block
+        BLOCK_ISB = 0x00000005, ///< Interface Statistics Block
+        BLOCK_EPB = 0x00000006, ///< Enhanced Packet Block
+        BLOCK_DSB = 0x0000000A, ///< Decryption Secrets Block
+        BLOCK_SHB = 0x0A0D0D0A, ///< Section Header Block
+    };
+
   private:
     uint32_t _type;
     ::std::vector<OptionBase *> _options;
@@ -153,4 +153,4 @@ class SimplePacket : public Block
 
 } // namespace PCapNG
 
-#endif /* __PCAPNGBase_H__ */
+#endif /* __PCAPNGBLOCK_H__ */

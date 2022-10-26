@@ -12,7 +12,7 @@
 #ifndef __PCAPNG_EPB_H__
 #define __PCAPNG_EPB_H__
 
-#include "PCapNGBase.h"
+#include "PCapNGBlock.h"
 #include "PCapNGBuffer.h"
 #include <cstddef>
 #include <cstdint>
