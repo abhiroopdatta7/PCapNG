@@ -1,4 +1,4 @@
-# libpcapng
+# libpcapng-cpp
 
 This is a very simple Pcap-NG writer developed in c++
 

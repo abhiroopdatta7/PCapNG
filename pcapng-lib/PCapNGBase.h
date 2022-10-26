@@ -48,6 +48,27 @@ class Block
         _type = blockType;
     }
 
+    void AddCustomOptionBinCopiable(const uint32_t pen, const char *description, const size_t size)
+    {
+        auto _option = CustomOption(OptionBase::OPTION_CUSTOM, pen, description, size);
+        this->appendOption(&_option);
+    }
+    void AddCustomOptionStringCopiable(const uint32_t pen, ::std::string description)
+    {
+        auto _option = CustomOption(OptionBase::OPTION_CUSTOM_STR, pen, description);
+        this->appendOption(&_option);
+    }
+    void AddCustomOptionBinNonCopiable(const uint32_t pen, const char *description, const size_t size)
+    {
+        auto _option = CustomOption(OptionBase::OPTION_CUSTOM_NO_COPY, pen, description, size);
+        this->appendOption(&_option);
+    }
+    void AddCustomOptionStringNonCopiable(const uint32_t pen, ::std::string description)
+    {
+        auto _option = CustomOption(OptionBase::OPTION_CUSTOM_STR_NO_COPY, pen, description);
+        this->appendOption(&_option);
+    }
+
     friend ::std::ostream &operator<<(::std::ostream &ostream, Block &obj)
     {
         obj.serialize();
@@ -107,12 +128,12 @@ class Block
 
 /**
  * @brief Simple Packet Block
- *
+ * @ref https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html#name-simple-packet-block
  */
-class SPB : public Block
+class SimplePacket : public Block
 {
   public:
-    SPB(uint32_t packetLen, char *packet) : Block(BLOCK_SPB)
+    SimplePacket(uint32_t packetLen, char *packet) : Block(BLOCK_SPB)
     {
         _originalPacketLength = packetLen;
         _packetData.append(packet, packetLen);

@@ -1,4 +1,4 @@
-project(pcapng)
+project(pcapng-cpp)
 
 file(GLOB_RECURSE CC_SOURCES CONFIGURE_DEPENDS "*.cc")
 

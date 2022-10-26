@@ -49,6 +49,16 @@ class OptionBase
 
     uint16_t _type;
 
+    enum OPTION_TYPE
+    {
+        OPTION_END = 0,
+        OPTION_COMMENT = 1,
+        OPTION_CUSTOM_STR = 2988,
+        OPTION_CUSTOM = 2989,
+        OPTION_CUSTOM_STR_NO_COPY = 19372,
+        OPTION_CUSTOM_NO_COPY = 19373,
+    };
+
   protected:
     Buffer _value;
 
@@ -59,14 +69,6 @@ class OptionBase
         uint16_t length = _value.size();
         return length;
     }
-};
-
-enum OPTION_TYPE
-{
-    OPTION_END = 0,
-    OPTION_COMMENT = 1,
-    OPTION_CUSTOM_STR = 2988,
-    OPTION_CUSTOM = 2989,
 };
 
 class EndOfOption : public OptionBase
@@ -86,9 +88,15 @@ class CustomOption : public OptionBase
 {
 
   public:
-    CustomOption(uint16_t type, uint32_t pen, char *buffer, size_t size) : OptionBase(type)
+    CustomOption(const uint16_t type, const uint32_t pen, ::std::string data) : OptionBase(type)
     {
-        pen = _pen;
+        _pen = pen;
+        data.append(data.c_str(), data.size());
+    }
+
+    CustomOption(const uint16_t type, const uint32_t pen, const char *buffer, const size_t size) : OptionBase(type)
+    {
+        _pen = pen;
         data.append(buffer, size);
     }
 

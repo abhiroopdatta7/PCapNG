@@ -9,6 +9,7 @@ int main()
     auto secHdr = ::PCapNG::SectionHeader();
     secHdr.AddHWDesc("My-PC");
     secHdr.AddOSDesc("Ubuntu");
+    secHdr.AddCustomOptionStringCopiable(123, "Hi");
 
     pcapNgFile.writeToFile(secHdr);
 
