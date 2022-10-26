@@ -34,11 +34,11 @@ enum EPB_PACKET_FLAG
  * @brief Enhanced Packet Block
  * @ref https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html#name-enhanced-packet-block
  */
-class EPB : public Block
+class EnhancedPacket : public Block
 {
   public:
-    EPB(uint32_t interface, uint32_t timestampHigh, uint32_t timestampLow, uint32_t capturedPacketLength,
-        uint32_t originalPacketLength, char *packet)
+    EnhancedPacket(uint32_t interface, uint32_t timestampHigh, uint32_t timestampLow, uint32_t capturedPacketLength,
+                   uint32_t originalPacketLength, char *packet)
         : Block(BLOCK_EPB)
     {
         _interfaceId = interface;

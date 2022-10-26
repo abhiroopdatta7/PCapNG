@@ -28,10 +28,10 @@ namespace PCapNG
  * @brief Section Header Block
  * @ref https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html#name-section-header-block
  */
-class SHB : public Block
+class SectionHeader : public Block
 {
   public:
-    SHB() : Block(BLOCK_SHB)
+    SectionHeader() : Block(BLOCK_SHB)
     {
         _byteOrderMagic = 0x1A2B3C4D;
         _majorVersion = 1;

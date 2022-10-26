@@ -28,7 +28,7 @@ namespace PCapNG
  * @brief Interface Description Block
  * @ref https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html#name-interface-description-block
  */
-class IDB : public Block
+class InterfaceDescription : public Block
 {
   public:
     typedef enum
@@ -59,7 +59,7 @@ class IDB : public Block
         LINKTYPE_ARCNET_LINUX = 129,
     } LINK_TYPE;
 
-    IDB(LINK_TYPE LinkType) : Block(BLOCK_IDB)
+    InterfaceDescription(LINK_TYPE LinkType) : Block(BLOCK_IDB)
     {
         _linkType = LinkType;
         _reserved = 0;

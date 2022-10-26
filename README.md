@@ -5,9 +5,9 @@ This is a very simple Pcap-NG writer developed in c++
 
 ## Build
 ```sh
-build_dir="build"
-cmake -B ${build_dir}
-cmake --build ${build_dir}
+BuildDir="build"
+cmake -B ${BuildDir}
+cmake --build ${BuildDir}
 ```
 
 ## License

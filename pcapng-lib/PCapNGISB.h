@@ -27,10 +27,10 @@ namespace PCapNG
  * @brief Interface Statistics Block
  * @ref https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html#name-interface-statistics-block
  */
-class ISB : public Block
+class InterfaceStatistics : public Block
 {
   public:
-    ISB(uint32_t interface, uint32_t timestampHigh, uint32_t timestampLow) : Block(BLOCK_ISB)
+    InterfaceStatistics(uint32_t interface, uint32_t timestampHigh, uint32_t timestampLow) : Block(BLOCK_ISB)
     {
         _interfaceId = interface;
         _timestampHigh = timestampHigh;
