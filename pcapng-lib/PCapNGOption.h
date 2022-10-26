@@ -18,14 +18,6 @@
 namespace PCapNG
 {
 
-enum OPTION_TYPE
-{
-    OPTION_END = 0,
-    OPTION_COMMENT = 1,
-    OPTION_CUSTOM_STR = 2988,
-    OPTION_CUSTOM = 2989,
-};
-
 size_t Pad32(size_t val);
 
 class OptionBase
@@ -69,26 +61,12 @@ class OptionBase
     }
 };
 
-class Option : public OptionBase
+enum OPTION_TYPE
 {
-  public:
-    Option(uint16_t tpye, ::std::string dec) : OptionBase(tpye)
-    {
-        _optionDetails.append(dec.c_str(), dec.size());
-    }
-
-    Option(uint16_t tpye, char *dec, size_t size) : OptionBase(tpye)
-    {
-        _optionDetails.append(dec, size);
-    }
-
-    void serialize() override
-    {
-        _value << _optionDetails;
-    }
-
-  private:
-    Buffer _optionDetails;
+    OPTION_END = 0,
+    OPTION_COMMENT = 1,
+    OPTION_CUSTOM_STR = 2988,
+    OPTION_CUSTOM = 2989,
 };
 
 class EndOfOption : public OptionBase
@@ -123,6 +101,28 @@ class CustomOption : public OptionBase
   private:
     uint32_t _pen;
     Buffer data;
+};
+
+class Option : public OptionBase
+{
+  public:
+    Option(uint16_t tpye, const ::std::string dec) : OptionBase(tpye)
+    {
+        _optionDetails.append(dec.c_str(), dec.size());
+    }
+
+    Option(uint16_t tpye, const char *dec, size_t size) : OptionBase(tpye)
+    {
+        _optionDetails.append(dec, size);
+    }
+
+    void serialize() override
+    {
+        _value << _optionDetails;
+    }
+
+  private:
+    Buffer _optionDetails;
 };
 
 } // namespace PCapNG

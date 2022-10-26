@@ -48,12 +48,6 @@ class Block
         _type = blockType;
     }
 
-    virtual void serialize() = 0;
-    virtual void appendOption(OptionBase *option)
-    {
-        _options.push_back(option);
-    }
-
     friend ::std::ostream &operator<<(::std::ostream &ostream, Block &obj)
     {
         obj.serialize();
@@ -85,6 +79,12 @@ class Block
     }
 
   protected:
+    virtual void appendOption(OptionBase *option)
+    {
+        _options.push_back(option);
+    }
+
+    virtual void serialize() = 0;
     Buffer _value;
 
   private:
@@ -118,14 +118,11 @@ class SPB : public Block
         _packetData.append(packet, packetLen);
     }
 
-    virtual void serialize() override
+  protected:
+    void serialize() override
     {
         _value << _originalPacketLength;
         _value << _packetData;
-    }
-
-    virtual void appendOption(OptionBase *option) override
-    {
     }
 
   private:

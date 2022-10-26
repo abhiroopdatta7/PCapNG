@@ -24,16 +24,9 @@
 namespace PCapNG
 {
 
-enum SHB_OPTION_TYPE
-{
-    OPTION_SHB_HW = 2,
-    OPTION_SHB_OS = 3,
-    OPTION_SHB_USRAPPL = 4,
-};
-
 /**
  * @brief Section Header Block
- *
+ * @ref https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html#name-section-header-block
  */
 class SHB : public Block
 {
@@ -46,15 +39,27 @@ class SHB : public Block
         _sectionLength = -1;
     }
 
-    SHB(::std::string hwDescription, ::std::string osDescription, ::std::string appDescription) : Block(BLOCK_SHB)
+    // Option APIs
+    void AddHWDesc(::std::string description)
     {
-        _byteOrderMagic = 0x1A2B3C4D;
-        _majorVersion = 1;
-        _minorVersion = 0;
-        _sectionLength = -1;
+        auto _option = Option(OPTION_HW, description);
+        this->appendOption(&_option);
     }
 
-    virtual void serialize() override
+    void AddOSDesc(::std::string description)
+    {
+        auto _option = Option(OPTION_OS, description);
+        this->appendOption(&_option);
+    }
+
+    void AddUserApplicationDesc(::std::string description)
+    {
+        auto _option = Option(OPTION_USRAPPL, description);
+        this->appendOption(&_option);
+    }
+
+  protected:
+    void serialize() override
     {
         _value << _byteOrderMagic;
         _value << _majorVersion;
@@ -67,6 +72,13 @@ class SHB : public Block
     uint16_t _majorVersion;
     uint16_t _minorVersion;
     int64_t _sectionLength;
+
+    enum OPTION_TYPE
+    {
+        OPTION_HW = 2,
+        OPTION_OS = 3,
+        OPTION_USRAPPL = 4,
+    };
 };
 
 } // namespace PCapNG

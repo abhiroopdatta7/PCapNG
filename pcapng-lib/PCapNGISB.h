@@ -23,21 +23,9 @@
 
 namespace PCapNG
 {
-
-enum ISB_OPTION_TYPE
-{
-    OPTION_ISB_START_TIME = 2,
-    OPTION_ISB_END_TIME = 3,
-    OPTION_ISB_IF_RECV = 4,
-    OPTION_ISB_IF_DROPPED = 5,
-    OPTION_ISB_FILTER_ACCEPT = 6,
-    OPTION_ISB_OS_DROP = 7,
-    OPTION_ISB_USER_DELIV = 8,
-};
-
 /**
- * @brief Interface Description Block
- *
+ * @brief Interface Statistics Block
+ * @ref https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html#name-interface-statistics-block
  */
 class ISB : public Block
 {
@@ -49,7 +37,8 @@ class ISB : public Block
         _timestampLow = timestampLow;
     }
 
-    virtual void serialize() override
+  protected:
+    void serialize() override
     {
         _value << _interfaceId;
         _value << _timestampHigh;
@@ -60,6 +49,17 @@ class ISB : public Block
     uint32_t _interfaceId;
     uint32_t _timestampHigh;
     uint32_t _timestampLow;
+
+    enum OPTION_TYPE
+    {
+        OPTION_START_TIME = 2,
+        OPTION_END_TIME = 3,
+        OPTION_IF_RECV = 4,
+        OPTION_IF_DROPPED = 5,
+        OPTION_FILTER_ACCEPT = 6,
+        OPTION_OS_DROP = 7,
+        OPTION_USER_DELIV = 8,
+    };
 };
 
 } // namespace PCapNG

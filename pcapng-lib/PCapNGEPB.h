@@ -23,17 +23,6 @@
 
 namespace PCapNG
 {
-
-enum EPB_OPTION_TYPE
-{
-    OPTION_EPB_FLAGS = 2,
-    OPTION_EPB_HASH = 3,
-    OPTION_EPB_DROPCOUNT = 4,
-    OPTION_EPB_PACKETID = 5,
-    OPTION_EPB_QUEUE = 6,
-    OPTION_EPB_VERDICT = 7,
-};
-
 enum EPB_PACKET_FLAG
 {
     EPB_PACKET_FLAG_NONE = 0,
@@ -43,7 +32,7 @@ enum EPB_PACKET_FLAG
 
 /**
  * @brief Enhanced Packet Block
- *
+ * @ref https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html#name-enhanced-packet-block
  */
 class EPB : public Block
 {
@@ -60,7 +49,31 @@ class EPB : public Block
         _packetData.append(packet, originalPacketLength);
     }
 
-    virtual void serialize() override
+    // Option APIs
+    void AddDropCount(uint64_t description)
+    {
+        auto _option = Option(OPTION_DROPCOUNT, (char *)&description, 8);
+        this->appendOption(&_option);
+    }
+
+    void AddPacketID(uint64_t description)
+    {
+        auto _option = Option(OPTION_PACKETID, (char *)&description, 8);
+        this->appendOption(&_option);
+    }
+
+    void AddVerdict(::std::string description)
+    {
+        auto _option = Option(OPTION_VERDICT, description);
+        this->appendOption(&_option);
+    }
+
+    // TODO: OPTION_FLAGS
+    // TODO: OPTION_HASH
+    // TODO: OPTION_QUEUE
+
+  protected:
+    void serialize() override
     {
         _value << _interfaceId;
         _value << _timestampHigh;
@@ -84,6 +97,16 @@ class EPB : public Block
     uint32_t _capturedPacketLength;
     uint32_t _originalPacketLength;
     Buffer _packetData;
+
+    enum OPTION_TYPE
+    {
+        OPTION_FLAGS = 2,
+        OPTION_HASH = 3,
+        OPTION_DROPCOUNT = 4,
+        OPTION_PACKETID = 5,
+        OPTION_QUEUE = 6,
+        OPTION_VERDICT = 7,
+    };
 };
 
 } // namespace PCapNG

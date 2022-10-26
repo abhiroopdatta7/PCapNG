@@ -8,16 +8,13 @@ int main()
     auto pcapNgFile = File("./build/test.pcapng");
 
     auto secHdr = SHB();
-    auto hwDesc = Option(OPTION_SHB_HW, "My-PC");
-    auto osDesc = Option(OPTION_SHB_OS, "Ubuntu-20.04-LTS");
-    secHdr.appendOption(&hwDesc);
-    secHdr.appendOption(&osDesc);
+    secHdr.AddHWDesc("My-PC");
+    secHdr.AddOSDesc("Ubuntu");
 
     pcapNgFile.writeToFile(secHdr);
 
-    auto interface = IDB(IDB_LINKTYPE_ETHERNET);
-    auto if_name = Option(OPTION_IDB_IF_NAME, "eth1");
-    interface.appendOption(&if_name);
+    auto interface = IDB(IDB::LINKTYPE_ETHERNET);
+    interface.AddInterfaceName("eth1");
     pcapNgFile << interface;
 
     auto packet = EPB(0, 11, 12, 0, 0, NULL);
